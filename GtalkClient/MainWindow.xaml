@@ -11,7 +11,7 @@
             <Label Content="Password" HorizontalAlignment="Left" />
             <PasswordBox x:Name="password" HorizontalContentAlignment="Center" />
             <Button Click="Connect" Content="Connection" Width="100" HorizontalAlignment="Center"/>
-            <TextBlock x:Name="consoleGtalk" TextWrapping="Wrap" Text="TextBlock" Height="261"/>
+            <TextBlock x:Name="consoleGtalk" TextWrapping="WrapWithOverflow"  Text="TextBlock"/>
         </StackPanel>
         
     </Grid>

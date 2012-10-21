@@ -27,6 +27,8 @@ namespace GtalkClient
         XmppClientConnection xmppCon = new XmppClientConnection();
         private bool connected = false;
         private string _debug = "";
+
+        private IDictionary<Jid, Presence> contact_lists = new Dictionary<Jid, Presence>();
         public MainWindow()
         {
             InitializeComponent();
@@ -42,9 +44,9 @@ namespace GtalkClient
                 xmppCon.Password = password.Password;
                 xmppCon.AutoResolveConnectServer = true;
                 //xmppCon.OnRosterStart += new ObjectHandler(xmppCon_OnRosterStart);
-                //xmppCon.OnRosterEnd += new ObjectHandler(xmppCon_OnRosterEnd);
                 xmppCon.OnRosterItem += new agsXMPP.XmppClientConnection.RosterHandler(OnRosterResult);
                 xmppCon.OnRosterEnd += new ObjectHandler(OnRosterEnd);
+                xmppCon.OnPresence += new agsXMPP.protocol.client.PresenceHandler(OnPresence);
                 xmppCon.Open();
                 connected = true;
             }
@@ -53,11 +55,26 @@ namespace GtalkClient
 
         private void OnRosterResult(object sender, agsXMPP.protocol.iq.roster.RosterItem item)
         {
-            _debug += item.Jid.User.ToString()+"\n";
+            //_debug += item.ToString();
+            if (item.Name != null) {
+                contact_lists.Add(item.Jid,new Presence(ShowType.NONE,"Offline"));
+            }
+            
         }
 
         private void OnRosterEnd(object sender) {
-            Console.WriteLine(_debug);
+            xmppCon.SendMyPresence();        
+        }
+
+        void OnPresence(object sender, agsXMPP.protocol.client.Presence pres)
+        {
+            contact_lists[pres.From]=pres;
+            this.Dispatcher.Invoke((Action)(() =>
+            {
+                if(pres.Show == ShowType.away)
+                    consoleGtalk.Text += String.Format("{0} show:{1} status:{2} \n\n", pres.From.ToString(), pres.Show.ToString(), pres.Status);
+            }));
+           
         }
 
         private void cmdSend_Click()
