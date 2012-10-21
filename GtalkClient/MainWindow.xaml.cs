@@ -27,11 +27,13 @@ namespace GtalkClient
         XmppClientConnection xmppCon = new XmppClientConnection();
         private bool connected = false;
         private string _debug = "";
+        private ContactManager cm;
 
-        private IDictionary<Jid, Presence> contact_lists = new Dictionary<Jid, Presence>();
+        
         public MainWindow()
         {
             InitializeComponent();
+            cm = ContactManager.getInstance();
         }
 
         public void Connect(object sender, RoutedEventArgs e)
@@ -57,7 +59,7 @@ namespace GtalkClient
         {
             //_debug += item.ToString();
             if (item.Name != null) {
-                contact_lists.Add(item.Jid,new Presence(ShowType.NONE,"Offline"));
+                cm.contactList.Add(item.Jid,new Presence(ShowType.NONE,"Offline"));
             }
             
         }
@@ -68,7 +70,7 @@ namespace GtalkClient
 
         void OnPresence(object sender, agsXMPP.protocol.client.Presence pres)
         {
-            contact_lists[pres.From]=pres;
+            cm.contactList[pres.From] = pres;
             this.Dispatcher.Invoke((Action)(() =>
             {
                 if(pres.Show == ShowType.away)
