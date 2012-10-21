@@ -24,6 +24,8 @@ namespace GtalkClient
     /// </summary>
     public partial class MainWindow : Window
     {
+        //TODO deplacer le gestionnaire agsXMPP to GtalkCommunication
+
         XmppClientConnection xmppCon = new XmppClientConnection();
         private bool connected = false;
         private string _debug = "";
@@ -49,6 +51,7 @@ namespace GtalkClient
                 xmppCon.OnRosterItem += new agsXMPP.XmppClientConnection.RosterHandler(OnRosterResult);
                 xmppCon.OnRosterEnd += new ObjectHandler(OnRosterEnd);
                 xmppCon.OnPresence += new agsXMPP.protocol.client.PresenceHandler(OnPresence);
+                xmppCon.OnMessage += new agsXMPP.protocol.client.MessageHandler(OnMessage);
                 xmppCon.Open();
                 connected = true;
             }
@@ -87,7 +90,21 @@ namespace GtalkClient
             msg.To = new Jid("");
             msg.Body = "";
 
+            IList<Message> msgs = cm.conversations[msg.To];
+            msgs.Add(msg);
+            cm.conversations.Add(msg.From, msgs);
+
             xmppCon.Send(msg);
+        }
+
+        void OnMessage(object sender, agsXMPP.protocol.client.Message msg)
+        {
+            // ignore empty messages (events)
+            if (msg.Body == null)
+                return;
+            IList<Message> msgs = cm.conversations[msg.From];
+            msgs.Add(msg);
+            cm.conversations.Add(msg.From, msgs);
         }
 	
     }
