@@ -25,17 +25,19 @@ namespace GtalkClient
     public partial class MainWindow : Window
     {
         //TODO deplacer le gestionnaire agsXMPP to GtalkCommunication
-
+        
         XmppClientConnection xmppCon = new XmppClientConnection();
         private bool connected = false;
         private string _debug = "";
         private ContactManager cm;
+        ChatWindows c;
 
         
         public MainWindow()
         {
             InitializeComponent();
             cm = ContactManager.getInstance();
+            c = new ChatWindows();
         }
 
         public void Connect(object sender, RoutedEventArgs e)
@@ -54,7 +56,11 @@ namespace GtalkClient
                 xmppCon.OnMessage += new agsXMPP.protocol.client.MessageHandler(OnMessage);
                 xmppCon.Open();
                 connected = true;
+                
+                c.Show();
             }
+
+
             
         }
 
