@@ -30,6 +30,7 @@ namespace GtalkClient
         private bool connected = false;
         private string _debug = "";
         private ContactManager cm;
+        private GtalkCommunication gC;
         ChatWindows c;
 
         
@@ -38,61 +39,13 @@ namespace GtalkClient
             InitializeComponent();
             cm = ContactManager.getInstance();
             c = new ChatWindows();
+            gC = new GtalkCommunication(this,c);
         }
 
         public void Connect(object sender, RoutedEventArgs e)
         {
-            if (!connected)
-            {
-                Jid jidUser = new Jid(email.Text);
-                xmppCon.Username = jidUser.User;
-                xmppCon.Server = jidUser.Server;
-                xmppCon.Password = password.Password;
-                xmppCon.AutoResolveConnectServer = true;
-                //xmppCon.OnRosterStart += new ObjectHandler(xmppCon_OnRosterStart);
-                xmppCon.OnRosterItem += new agsXMPP.XmppClientConnection.RosterHandler(OnRosterResult);
-                xmppCon.OnRosterEnd += new ObjectHandler(OnRosterEnd);
-                xmppCon.OnPresence += new agsXMPP.protocol.client.PresenceHandler(OnPresence);
-                xmppCon.OnMessage += new agsXMPP.protocol.client.MessageHandler(OnMessage);
-                xmppCon.OnLogin += new ObjectHandler(OnLogin);
-                xmppCon.Open();
-                connected = true;
-            }
-
-
-            
-        }
-
-        private void OnRosterResult(object sender, agsXMPP.protocol.iq.roster.RosterItem item)
-        {
-            //_debug += item.ToString();
-            if (item.Name != null) {
-                cm.contactList.Add(item.Jid,new Presence(ShowType.NONE,"Offline"));
-            }
-            
-        }
-
-        private void OnRosterEnd(object sender) {
-            xmppCon.SendMyPresence();        
-        }
-
-        private void OnLogin(object sender)
-        {
-            this.Dispatcher.Invoke((Action)(() =>
-            {
-                c.Show();
-            }));
-        }
-
-        private void OnPresence(object sender, agsXMPP.protocol.client.Presence pres)
-        {
-            cm.contactList[pres.From] = pres;
-            this.Dispatcher.Invoke((Action)(() =>
-            {
-                if(pres.Show == ShowType.away)
-                    consoleGtalk.Text += String.Format("{0} show:{1} status:{2} \n\n", pres.From.ToString(), pres.Show.ToString(), pres.Status);
-            }));
-           
+            gC.UserJid = new Jid(email.Text);
+            gC.Connect(password.Password);         
         }
 
         private void cmdSend_Click()
@@ -109,16 +62,5 @@ namespace GtalkClient
 
             xmppCon.Send(msg);
         }
-
-        void OnMessage(object sender, agsXMPP.protocol.client.Message msg)
-        {
-            // ignore empty messages (events)
-            if (msg.Body == null)
-                return;
-            IList<Message> msgs = cm.conversations[msg.From];
-            msgs.Add(msg);
-            cm.conversations.Add(msg.From, msgs);
-        }
-	
     }
 }
