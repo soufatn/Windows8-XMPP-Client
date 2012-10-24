@@ -3,20 +3,23 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="ChatWindows" Height="400" Width="800">
     <Grid>
-        <Grid HorizontalAlignment="Left" Height="371" VerticalAlignment="Top" Width="200">
-            <ListView HorizontalAlignment="Left" Height="371" VerticalAlignment="Top" ItemsSource="{DynamicResource Contacts}" Width="200">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="Name"
-                        DisplayMemberBinding="{Binding Key}" />
-                    </GridView>
-                </ListView.View>
-            </ListView>
-            
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="8*"/>
+        </Grid.ColumnDefinitions>
+        <ListView Grid.Column="0" ItemsSource="{DynamicResource Contacts}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Key}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
         </Grid>
-        <Grid>
-            <Button Content="Refresh" Click="Refresh" Margin="203,0,0.333,-0.333"/>
-        </Grid>
-        
+        <Button Grid.Column="1" Content="Refresh" Click="Refresh" />
     </Grid>
 </Window>

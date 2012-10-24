@@ -54,10 +54,9 @@ namespace GtalkClient
                 xmppCon.OnRosterEnd += new ObjectHandler(OnRosterEnd);
                 xmppCon.OnPresence += new agsXMPP.protocol.client.PresenceHandler(OnPresence);
                 xmppCon.OnMessage += new agsXMPP.protocol.client.MessageHandler(OnMessage);
+                xmppCon.OnLogin += new ObjectHandler(OnLogin);
                 xmppCon.Open();
                 connected = true;
-                
-                c.Show();
             }
 
 
@@ -77,7 +76,15 @@ namespace GtalkClient
             xmppCon.SendMyPresence();        
         }
 
-        void OnPresence(object sender, agsXMPP.protocol.client.Presence pres)
+        private void OnLogin(object sender)
+        {
+            this.Dispatcher.Invoke((Action)(() =>
+            {
+                c.Show();
+            }));
+        }
+
+        private void OnPresence(object sender, agsXMPP.protocol.client.Presence pres)
         {
             cm.contactList[pres.From] = pres;
             this.Dispatcher.Invoke((Action)(() =>
