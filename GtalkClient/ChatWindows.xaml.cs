@@ -23,17 +23,31 @@ namespace GtalkClient
     {
 
         private ContactManager cm;
-
+        public IDictionary<Jid, Presence> list;
         public ChatWindows()
         {
             cm = ContactManager.getInstance();
+            list = new Dictionary<Jid, Presence>();
 
             InitializeComponent();
         }
-
+        public void Refresh() {
+            this.Dispatcher.Invoke(new Action(delegate()
+            {
+                RefreshList();
+            }));
+        }
         public void RefreshList()
         {
+            list.Clear();
 
+            foreach (var contact in cm.contactList)
+            {
+                if (contact.Value.Type == PresenceType.available)
+                    list.Add(contact);
+            }
+
+            listBox1.ItemsSource = list;
         }
     }
 }

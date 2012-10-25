@@ -64,6 +64,7 @@ namespace GtalkClient
         private void OnRosterEnd(object sender)
         {
             xmppCon.SendMyPresence();
+            //cW.Refresh();
         }
 
         private void OnLogin(object sender)
@@ -74,6 +75,7 @@ namespace GtalkClient
         private void OnPresence(object sender, agsXMPP.protocol.client.Presence pres)
         {
             cm.contactList[pres.From] = pres;
+            cW.Refresh();
 
         }
 

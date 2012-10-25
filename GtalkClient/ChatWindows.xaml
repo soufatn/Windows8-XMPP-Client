@@ -7,11 +7,15 @@
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="8*"/>
         </Grid.ColumnDefinitions>
-        <DataGrid x:Name="datagrid1" Grid.Column="0" AutoGenerateColumns="True" >
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Song" Width="*" Binding="{Binding value.From}" />
-            </DataGrid.Columns>
-        </DataGrid>
+        <ListBox Grid.Column="0" Name="listBox1" ItemsSource="{Binding}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Key.Bare}" Foreground="#FFC8AB14" FontSize="24" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
