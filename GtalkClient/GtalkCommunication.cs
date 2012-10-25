@@ -68,7 +68,7 @@ namespace GtalkClient
 
         private void OnLogin(object sender)
         {
-            cW.Show();
+            mW.showChat();
         }
 
         private void OnPresence(object sender, agsXMPP.protocol.client.Presence pres)

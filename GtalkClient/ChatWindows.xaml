@@ -7,19 +7,17 @@
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="8*"/>
         </Grid.ColumnDefinitions>
-        <ListView Grid.Column="0" ItemsSource="{DynamicResource Contacts}">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Key}" />
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <DataGrid x:Name="datagrid1" Grid.Column="0" AutoGenerateColumns="True" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Song" Width="*" Binding="{Binding value.From}" />
+            </DataGrid.Columns>
+        </DataGrid>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="20"/>
             </Grid.RowDefinitions>
         </Grid>
-        <Button Grid.Column="1" Content="Refresh" Click="Refresh" />
+        <Button Grid.Column="1" Content="Refresh"  />
     </Grid>
 </Window>

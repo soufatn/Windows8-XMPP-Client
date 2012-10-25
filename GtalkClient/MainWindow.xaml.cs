@@ -48,6 +48,12 @@ namespace GtalkClient
             gC.Connect(password.Password);         
         }
 
+        public void showChat() {
+            this.Dispatcher.Invoke(new Action(delegate() {
+                c.Show();
+            }));
+        }
+
         private void cmdSend_Click()
         {
             // Send a message

@@ -28,19 +28,12 @@ namespace GtalkClient
         {
             cm = ContactManager.getInstance();
 
-
-            Resources["Contacts"] = cm.contactList;
-
             InitializeComponent();
         }
 
-        public void Refresh(object sender, RoutedEventArgs e)
+        public void RefreshList()
         {
-            Resources["Contacts"] = cm.contactList;
-            Console.WriteLine(cm.contactList.Count);
-            foreach(KeyValuePair<Jid,Presence> child in cm.contactList) {
-                Console.WriteLine(child.Value.From);
-            }
+
         }
     }
 }

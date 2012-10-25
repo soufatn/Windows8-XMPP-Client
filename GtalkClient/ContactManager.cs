@@ -12,11 +12,17 @@ namespace GtalkClient
     class ContactManager
     {
         private static ContactManager instance;
-        private ContactManager() {}
         private static readonly object myLock = new object();
 
-        public IDictionary<Jid, Presence> contactList = new Dictionary<Jid, Presence>();
-        public IDictionary<Jid, IList<Message>> conversations = new Dictionary<Jid, IList<Message>>();
+        public IDictionary<Jid, Presence> contactList;
+        public IDictionary<Jid, IList<Message>> conversations;
+        
+        private ContactManager() {
+            contactList = new Dictionary<Jid, Presence>();
+            conversations = new Dictionary<Jid, IList<Message>>();
+        }
+
+
         public static ContactManager getInstance() {
             lock (myLock) 
             { 
