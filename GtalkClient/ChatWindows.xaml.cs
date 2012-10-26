@@ -15,13 +15,14 @@ using agsXMPP;
 using agsXMPP.protocol.client;
 using System.Windows.Threading;
 using System.Threading;
+using MahApps.Metro.Controls;
 
 namespace GtalkClient
 {
     /// <summary>
     /// Interaction logic for ChatWindows.xaml
     /// </summary>
-    public partial class ChatWindows : Window
+    public partial class ChatWindows : MetroWindow
     {
 
         private ContactManager cm;
@@ -50,7 +51,6 @@ namespace GtalkClient
 
             foreach (KeyValuePair<Jid, Presence> contact in cm.contactList)
             {
-                
                 if (contact.Value.Type == PresenceType.available) {
                     Dispatcher.BeginInvoke(DispatcherPriority.Background, new ParameterizedThreadStart(addContact), contact);
                 }

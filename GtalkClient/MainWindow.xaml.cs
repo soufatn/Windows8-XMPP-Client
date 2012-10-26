@@ -16,13 +16,14 @@ using System.Windows.Shapes;
 using agsXMPP;
 using agsXMPP.protocol.iq.roster;
 using agsXMPP.protocol.client;
+using MahApps.Metro.Controls;
 
 namespace GtalkClient
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : MetroWindow
     {
         //TODO deplacer le gestionnaire agsXMPP to GtalkCommunication
         
