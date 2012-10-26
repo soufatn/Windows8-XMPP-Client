@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using agsXMPP;
 using agsXMPP.protocol.client;
+using System.Windows.Threading;
+using System.Threading;
 
 namespace GtalkClient
 {
@@ -24,6 +26,7 @@ namespace GtalkClient
 
         private ContactManager cm;
         public IDictionary<Jid, Presence> list;
+        private bool test =false;
         public ChatWindows()
         {
             cm = ContactManager.getInstance();
@@ -39,15 +42,29 @@ namespace GtalkClient
         }
         public void RefreshList()
         {
-            list.Clear();
+            if (!test) {
+                test = true;
+                listBox1.ItemsSource = list;
+            }
+                list.Clear();
 
-            foreach (var contact in cm.contactList)
+            foreach (KeyValuePair<Jid, Presence> contact in cm.contactList)
             {
-                if (contact.Value.Type == PresenceType.available)
-                    list.Add(contact);
+                
+                if (contact.Value.Type == PresenceType.available) {
+                    Dispatcher.BeginInvoke(DispatcherPriority.Background, new ParameterizedThreadStart(addContact), contact);
+                }
             }
 
-            listBox1.ItemsSource = list;
+
+        }
+
+        void addContact(Object _contact) {
+            KeyValuePair<Jid, Presence> c = (KeyValuePair<Jid, Presence>)_contact;
+            if (!list.ContainsKey(c.Key))
+            {
+                list.Add(c);
+            }
         }
     }
 }

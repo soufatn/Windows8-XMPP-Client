@@ -18,10 +18,13 @@
         </ListBox>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="20"/>
+                <RowDefinition Height="8*"/>
+                <RowDefinition Height="30"/>
             </Grid.RowDefinitions>
+            <Button Grid.Row="0" Content="Refresh"/>
+            <TextBox Grid.Row="1" Text="TextBox" />
         </Grid>
-        <Button Grid.Column="1" Content="Refresh"  />
+
+
     </Grid>
 </Window>

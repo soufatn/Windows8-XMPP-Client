@@ -56,7 +56,8 @@ namespace GtalkClient
             //_debug += item.ToString();
             if (item.Name != null)
             {
-                cm.contactList.Add(item.Jid, new Presence(ShowType.NONE, "Offline"));
+                if(item.Jid.Server != "public.talk.google.com")
+                    cm.contactList.Add(item.Jid, new Presence(ShowType.NONE, "Offline"));
             }
 
         }
@@ -74,8 +75,11 @@ namespace GtalkClient
 
         private void OnPresence(object sender, agsXMPP.protocol.client.Presence pres)
         {
-            cm.contactList[pres.From] = pres;
-            cW.Refresh();
+            if (pres.From.Server != "public.talk.google.com") {
+                cm.contactList[pres.From] = pres;
+                cW.Refresh();
+            }
+            
 
         }
 
