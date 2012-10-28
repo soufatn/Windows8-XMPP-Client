@@ -29,6 +29,7 @@ namespace GtalkClient
         private ObservableCollection<UserJabber> listOfContact;
         private ObservableCollection<Message> listOfConv;
         private GtalkCommunication gc;
+        private UserJabber userSelected;
         private bool test =false;
         public ChatWindows()
         {
@@ -70,10 +71,10 @@ namespace GtalkClient
                     Console.WriteLine(user.FullName);
                     KeyValuePair<UserJabber, Presence> keyvalue = new KeyValuePair<UserJabber, Presence>(user, contact.Value);
 
-                    //listBox1.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate()
-                    //{
+                    listBox1.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate()
+                    {
                         addContact(keyvalue);
-                    //}));
+                    }));
                 }
                     
                 
@@ -88,34 +89,53 @@ namespace GtalkClient
 
         public void OnSelect(object sender, RoutedEventArgs e)
         {
-            RefreshConversation();            
+            RefreshConversation();
+            userSelected = (UserJabber)listBox1.SelectedItem;
         }
 
-        void RefreshConversation()
+        public void RefreshConversation()
         {
-            listOfConv.Clear();
-            UserJabber user = (UserJabber)listBox1.SelectedItem;
-            if (cm.conversations.ContainsKey(user.jid.Bare))
-            {
-                foreach (Message m in cm.conversations[user.jid.Bare])
+            listBoxConv.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate() {
+                listOfConv.Clear();
+                
+                if (cm.conversations.ContainsKey(gc.UserJid.Bare))
                 {
-                    if (m.To.Bare == user.jid.Bare || m.From.Bare == user.jid.Bare)
+                    foreach (Message m in cm.conversations[gc.UserJid.Bare])
                     {
-                        listOfConv.Add(m);
+                        if (m.To.Bare == userSelected.jid.Bare || m.From.Bare == userSelected.jid.Bare)
+                        {
+                            Console.WriteLine(m.From + " : " + m.Body);
+                            listOfConv.Add(m);
+                        }
                     }
                 }
+                ScrollToEnd();
+            }));
+
+        }
+
+        public void ScrollToEnd()
+        {
+            Console.WriteLine("Scroll" + (listBoxConv.Items.Count));
+            if (listBoxConv.Items.Count > 0)
+            {
+                Console.WriteLine("Scroll"+(listBoxConv.Items.Count - 1));
+                listBoxConv.ScrollIntoView(listBoxConv.Items[listBoxConv.Items.Count - 1]);
             }
+            
         }
 
         public void Send(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Return)
             {
-                UserJabber user = (UserJabber)listBox1.SelectedItem;
 
-                gc.Send(user.jid, body.Text);
+                if (userSelected != null)
+                {
+                    gc.Send(userSelected.jid, body.Text);
 
-                body.Text = "";
+                    body.Text = "";
+                }
 
             }
         }
@@ -136,6 +156,11 @@ namespace GtalkClient
             {
                 listOfContact.Add(c.Key);
             }
+        }
+
+        private void listBoxConv_SizeChanged_1(object sender, SizeChangedEventArgs e)
+        {
+
         }
     }
 }

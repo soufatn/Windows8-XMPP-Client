@@ -136,6 +136,7 @@ namespace GtalkClient
             msg.Type = agsXMPP.protocol.client.MessageType.chat;
             msg.To = to;
             msg.Body = b;
+
             if (cm.conversations.ContainsKey(from.Bare))
             {
                 IList<Message> msgs = cm.conversations[from.Bare];
@@ -148,7 +149,7 @@ namespace GtalkClient
                 cm.conversations.Add(from.Bare, msgs);
             }
 
-            
+            cW.RefreshConversation();
 
 
             xmppCon.Send(msg);
@@ -171,6 +172,8 @@ namespace GtalkClient
                 msgs.Add(msg);
                 cm.conversations.Add(msg.To.Bare, msgs);
             }
+
+            cW.RefreshConversation();
         }
 	
     }
