@@ -18,6 +18,7 @@ using agsXMPP.protocol.iq.roster;
 using agsXMPP.protocol.client;
 using MahApps.Metro.Controls;
 using GtalkClient.Properties;
+using System.Media;
 
 namespace GtalkClient
 {

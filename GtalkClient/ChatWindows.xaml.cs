@@ -17,6 +17,7 @@ using System.Windows.Threading;
 using System.Threading;
 using MahApps.Metro.Controls;
 using System.Collections.ObjectModel;
+using System.Media;
 namespace GtalkClient
 {
     /// <summary>
@@ -123,6 +124,9 @@ namespace GtalkClient
                 }));
 
             }
+
+
+            new SoundPlayer("./Sounds/button-9.wav").Play();
 
             RefreshConversation();
 
