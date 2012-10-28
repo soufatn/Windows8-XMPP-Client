@@ -78,6 +78,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="MetroTalkMessage.cs" />
+    <Compile Include="MetroTalkPopup.xaml.cs">
+      <DependentUpon>MetroTalkPopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserJabber.cs" />
     <Page Include="ChatWindows.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -100,6 +103,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MetroTalkPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\MyStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

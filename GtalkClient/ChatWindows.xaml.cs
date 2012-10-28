@@ -31,6 +31,9 @@ namespace GtalkClient
         private GtalkCommunication gc;
         private UserJabber userSelected;
         private bool test =false;
+        bool isApplicationActive;
+
+
         public ChatWindows()
         {
            
@@ -93,6 +96,33 @@ namespace GtalkClient
             body.IsEnabled = true;
             body.Text = "";
             userSelected = (UserJabber)listBox1.SelectedItem;
+        }
+        void App_Activated(object sender, EventArgs e)
+        {
+            // Application activated 
+            this.isApplicationActive = true;
+            Console.WriteLine("Active");
+        }
+
+        void App_Deactivated(object sender, EventArgs e)
+        {
+            // Application deactivated 
+            this.isApplicationActive = false;
+            Console.WriteLine("Desactive");
+        }
+
+        [STAThread]
+        public void newMessage(MetroTalkMessage m) {
+            if (!this.isApplicationActive || m.From.Bare != userSelected.jid.Bare)
+            {
+                UserJabber u = cm.users[m.From.Bare];
+                string s = u.FullName + " : " + m.Body;
+                MetroTalkPopup p = new MetroTalkPopup(s);
+                p.Show();
+            }
+
+            RefreshConversation();
+
         }
 
         public void RefreshConversation()

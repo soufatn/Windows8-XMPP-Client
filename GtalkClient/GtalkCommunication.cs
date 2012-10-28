@@ -36,8 +36,9 @@ namespace GtalkClient
             cW = _cw;
             UserJid = _j;
         }
-        public void Connect(string password, bool save)
+        public void Connect(string password, bool _save)
         {
+            this.save = _save;
             if (!connected)
             {
                 xmppCon.Username = UserJid.User;
@@ -214,7 +215,7 @@ namespace GtalkClient
                 cm.conversations.Add(msg.To.Bare, msgs);
             }
 
-            cW.RefreshConversation();
+            cW.newMessage(m);
         }
 	
     }

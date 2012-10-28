@@ -28,12 +28,10 @@ namespace GtalkClient
     {
         //TODO deplacer le gestionnaire agsXMPP to GtalkCommunication
         
-        XmppClientConnection xmppCon = new XmppClientConnection();
-        private bool connected = false;
-        private string _debug = "";
         private ContactManager cm;
         private GtalkCommunication gC;
         private ChatWindows c;
+
 
         
         public MainWindow()

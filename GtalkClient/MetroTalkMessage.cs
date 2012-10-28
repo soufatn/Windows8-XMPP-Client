@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GtalkClient
 {
-    class MetroTalkMessage
+    public class MetroTalkMessage
     {
         public Jid From { get; set; }
         public Jid To { get; set; }
