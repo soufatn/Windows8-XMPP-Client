@@ -41,7 +41,7 @@ namespace GtalkClient
             cm = ContactManager.getInstance();
             c = new ChatWindows();
             gC = new GtalkCommunication(this,c);
-            //c.setGC(gC);
+            c.SetGC(gC);
         }
 
         public void Connect(object sender, RoutedEventArgs e)

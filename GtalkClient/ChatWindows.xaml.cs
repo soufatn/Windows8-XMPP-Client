@@ -40,6 +40,11 @@ namespace GtalkClient
             InitializeComponent();
         }
 
+        public void SetGC(GtalkCommunication _gc)
+        {
+            gc = _gc;
+        }
+
         public void Refresh() {
             this.Dispatcher.Invoke(new Action(delegate()
             {
