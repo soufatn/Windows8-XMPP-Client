@@ -17,13 +17,13 @@ namespace GtalkClient
 
         public IDictionary<string, Jid> contactList;
         public IDictionary<string, Presence> PresenceList;
-        public IDictionary<string, IList<Message>> conversations;
+        public IDictionary<string, IList<MetroTalkMessage>> conversations;
         public IDictionary<string, UserJabber> users;
         
         private ContactManager() {
             contactList = new Dictionary<string, Jid>();
             PresenceList = new Dictionary<string, Presence>();
-            conversations = new Dictionary<string, IList<Message>>();
+            conversations = new Dictionary<string, IList<MetroTalkMessage>>();
             users = new Dictionary<string, UserJabber>();
         }
 

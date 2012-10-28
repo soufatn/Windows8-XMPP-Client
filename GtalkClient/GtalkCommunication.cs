@@ -48,9 +48,28 @@ namespace GtalkClient
                 xmppCon.OnPresence += new agsXMPP.protocol.client.PresenceHandler(OnPresence);
                 xmppCon.OnMessage += new agsXMPP.protocol.client.MessageHandler(OnMessage);
                 xmppCon.OnLogin += new ObjectHandler(OnLogin);
+                xmppCon.OnAuthError += new XmppElementHandler(AuthError);
+                xmppCon.OnError += new ErrorHandler(xmppCon_OnError);
+                xmppCon.OnClose += new ObjectHandler(xmppCon_OnClose);
                 xmppCon.Open();
                 connected = true;
             }
+        }
+
+        private void AuthError(object sender, agsXMPP.Xml.Dom.Element e)
+        {
+            connected = false;
+            Console.WriteLine("Error Login");
+        }
+
+        void xmppCon_OnClose(object sender)
+        {
+            
+        }
+
+        void xmppCon_OnError(object sender, Exception ex)
+        {
+            Console.WriteLine(ex);
         }
 
         private void OnRosterResult(object sender, agsXMPP.protocol.iq.roster.RosterItem item)
@@ -131,21 +150,27 @@ namespace GtalkClient
         public void Send(Jid to, string b)
         {
             Jid from = UserJid;
+            MetroTalkMessage m = new MetroTalkMessage();
             // Send a message
             agsXMPP.protocol.client.Message msg = new agsXMPP.protocol.client.Message();
             msg.Type = agsXMPP.protocol.client.MessageType.chat;
             msg.To = to;
             msg.Body = b;
 
+            m.To = to;
+            m.Body = b;
+            m.From = from;
+            m.Date = DateTime.Now;
+
             if (cm.conversations.ContainsKey(from.Bare))
             {
-                IList<Message> msgs = cm.conversations[from.Bare];
-                msgs.Add(msg);
+                IList<MetroTalkMessage> msgs = cm.conversations[from.Bare];
+                msgs.Add(m);
                 cm.conversations[from.Bare] = msgs;
             }
             else {
-                IList<Message> msgs = new List<Message>();
-                msgs.Add(msg);
+                IList<MetroTalkMessage> msgs = new List<MetroTalkMessage>();
+                msgs.Add(m);
                 cm.conversations.Add(from.Bare, msgs);
             }
 
@@ -160,16 +185,23 @@ namespace GtalkClient
             // ignore empty messages (events)
             if (msg.Body == null)
                 return;
+            MetroTalkMessage m = new MetroTalkMessage();
+
+            m.Date = DateTime.Now;
+            m.To = msg.To;
+            m.From = msg.From;
+            m.Body = msg.Body;
+
             if (cm.conversations.ContainsKey(msg.To.Bare))
             {
-                IList<Message> msgs = cm.conversations[msg.To.Bare];
-                msgs.Add(msg);
+                IList<MetroTalkMessage> msgs = cm.conversations[msg.To.Bare];
+                msgs.Add(m);
                 cm.conversations[msg.To.Bare] = msgs;
             }
             else
             {
-                IList<Message> msgs = new List<Message>();
-                msgs.Add(msg);
+                IList<MetroTalkMessage> msgs = new List<MetroTalkMessage>();
+                msgs.Add(m);
                 cm.conversations.Add(msg.To.Bare, msgs);
             }
 

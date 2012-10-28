@@ -27,7 +27,7 @@ namespace GtalkClient
 
         private ContactManager cm;
         private ObservableCollection<UserJabber> listOfContact;
-        private ObservableCollection<Message> listOfConv;
+        private ObservableCollection<MetroTalkMessage> listOfConv;
         private GtalkCommunication gc;
         private UserJabber userSelected;
         private bool test =false;
@@ -36,7 +36,7 @@ namespace GtalkClient
            
             cm = ContactManager.getInstance();
             listOfContact = new ObservableCollection<UserJabber>();
-            listOfConv = new ObservableCollection<Message>();
+            listOfConv = new ObservableCollection<MetroTalkMessage>();
 
             InitializeComponent();
         }
@@ -100,8 +100,9 @@ namespace GtalkClient
                 
                 if (cm.conversations.ContainsKey(gc.UserJid.Bare))
                 {
-                    foreach (Message m in cm.conversations[gc.UserJid.Bare])
+                    foreach (MetroTalkMessage m in cm.conversations[gc.UserJid.Bare])
                     {
+                        Console.WriteLine(m);
                         if (m.To.Bare == userSelected.jid.Bare || m.From.Bare == userSelected.jid.Bare)
                         {
                             Console.WriteLine(m.From + " : " + m.Body);
