@@ -37,7 +37,7 @@
             <ListBox Grid.Row="0" Name="listBoxConv" ItemsSource="{Binding}" Margin="10">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal" Width="*">
+                        <StackPanel Orientation="Horizontal">
                             <TextBlock Text="{Binding DateTimeStr}" Margin="10,0,10,0"/>
                             <TextBlock Text="{Binding From.Bare}"  Margin="10,0,10,0"/>
                             <TextBlock Text="{Binding Body}"  Margin="10,0,10,0"/>

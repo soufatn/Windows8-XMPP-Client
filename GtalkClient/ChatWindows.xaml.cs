@@ -117,8 +117,11 @@ namespace GtalkClient
             {
                 UserJabber u = cm.users[m.From.Bare];
                 string s = u.FullName + " : " + m.Body;
-                MetroTalkPopup p = new MetroTalkPopup(s);
-                p.Show();
+                this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate() {
+                    MetroTalkPopup p = new MetroTalkPopup(s);
+                    p.Show();
+                }));
+
             }
 
             RefreshConversation();
