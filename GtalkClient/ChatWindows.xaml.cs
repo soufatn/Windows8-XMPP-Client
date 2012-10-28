@@ -42,7 +42,7 @@ namespace GtalkClient
 
         public void SetGC(GtalkCommunication _gc)
         {
-            gc = _gc;
+            gc=_gc;
         }
 
         public void Refresh() {

@@ -9,7 +9,7 @@ using agsXMPP.protocol.iq.vcard;
 
 namespace GtalkClient
 {
-    class GtalkCommunication
+    public class GtalkCommunication
     {
         public Jid UserJid {get;set;}
         private XmppClientConnection xmppCon;
@@ -138,14 +138,14 @@ namespace GtalkClient
             msg.Body = b;
             if (cm.conversations.ContainsKey(from.Bare))
             {
-                IList<Message> msgs = cm.conversations[msg.From.Bare];
+                IList<Message> msgs = cm.conversations[from.Bare];
                 msgs.Add(msg);
-                cm.conversations[msg.From.Bare]= msgs;
+                cm.conversations[from.Bare] = msgs;
             }
             else {
                 IList<Message> msgs = new List<Message>();
                 msgs.Add(msg);
-                cm.conversations.Add(msg.From.Bare, msgs);
+                cm.conversations.Add(from.Bare, msgs);
             }
 
             
