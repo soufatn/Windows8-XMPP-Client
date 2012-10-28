@@ -32,7 +32,7 @@ namespace GtalkClient
         private string _debug = "";
         private ContactManager cm;
         private GtalkCommunication gC;
-        ChatWindows c;
+        private ChatWindows c;
 
         
         public MainWindow()
@@ -41,12 +41,22 @@ namespace GtalkClient
             cm = ContactManager.getInstance();
             c = new ChatWindows();
             gC = new GtalkCommunication(this,c);
+            //c.setGC(gC);
         }
 
         public void Connect(object sender, RoutedEventArgs e)
         {
-            gC.UserJid = new Jid(email.Text);
-            gC.Connect(password.Password);         
+            gC.UserJid = new Jid(email.Text+"@gmail.com");
+            gC.Connect(password.Password);    
+
+        }
+        private void OnKeyDownHandler(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                gC.UserJid = new Jid(email.Text + "@gmail.com");
+                gC.Connect(password.Password);     
+            }
         }
 
         public void showChat() {
@@ -63,11 +73,6 @@ namespace GtalkClient
             msg.To = new Jid("");
             msg.Body = "";
 
-            IList<Message> msgs = cm.conversations[msg.To];
-            msgs.Add(msg);
-            cm.conversations.Add(msg.From, msgs);
-
-            xmppCon.Send(msg);
         }
     }
 }

@@ -19,12 +19,11 @@
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="8*"/>
         </Grid.ColumnDefinitions>
-        <ListBox Grid.Column="0" Name="listBox1" ItemsSource="{Binding}">
+        <ListBox Grid.Column="0" SelectionChanged="OnSelect"  Name="listBox1" ItemsSource="{Binding}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Vertical">
-                        <TextBlock Text="{Binding Key.Bare}"/>
-                        <TextBlock Text="{Binding Value.Status}"/>
+                        <TextBlock Text="{Binding FullName}"/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
@@ -34,8 +33,17 @@
                 <RowDefinition Height="8*"/>
                 <RowDefinition Height="30"/>
             </Grid.RowDefinitions>
-            <Button Grid.Row="0" Content="Refresh"/>
-            <TextBox Grid.Row="1" Text="TextBox" />
+            <TextBox Grid.Row="1" Name="body" Text="TextBox" KeyDown="Send" />
+            <ListBox Grid.Row="0" Name="listBoxConv" ItemsSource="{Binding}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Text="{Binding From.Bare}"/>
+                            <TextBlock Text="{Binding Body}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </Grid>
 
 

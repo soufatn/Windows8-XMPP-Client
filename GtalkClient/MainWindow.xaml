@@ -33,7 +33,7 @@
         <Label Grid.Column="0" Grid.Row="1" Margin="10,0,0,0" Content="E-mail" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
         <TextBox Grid.Column="0" Grid.Row="2"  x:Name="email" HorizontalContentAlignment="Stretch" />
         <Label Grid.Column="0" Grid.Row="3" Margin="10,0,0,0" Content="Password" HorizontalAlignment="Left" VerticalContentAlignment="Center" />
-        <PasswordBox Grid.Column="0" Grid.Row="4" x:Name="password" HorizontalContentAlignment="Stretch" />
+        <PasswordBox Grid.Column="0" Grid.Row="4" x:Name="password" HorizontalContentAlignment="Stretch" KeyDown="OnKeyDownHandler"/>
         <Button Grid.Column="0" Grid.Row="6" Click="Connect" Content="Connection" HorizontalContentAlignment="Center"/>
         <CheckBox Content="Remember me" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="5" VerticalAlignment="Center" />
 
