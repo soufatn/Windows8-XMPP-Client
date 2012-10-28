@@ -49,7 +49,7 @@ namespace GtalkClient
             Console.WriteLine(this.Width + ";" + this.Height);
             this.Left = desktopWorkingArea.Right - this.Width;
             this.Top = desktopWorkingArea.Bottom - this.Height;
-            
+            this.Topmost = true;
             InitializeComponent();
             message.Text = _message;
             _timer.Start();
