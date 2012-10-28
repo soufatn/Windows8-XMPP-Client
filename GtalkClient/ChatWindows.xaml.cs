@@ -95,23 +95,27 @@ namespace GtalkClient
 
         public void RefreshConversation()
         {
-            listBoxConv.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate() {
-                listOfConv.Clear();
-                
-                if (cm.conversations.ContainsKey(gc.UserJid.Bare))
+            if (userSelected != null)
+            {
+                listBoxConv.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate()
                 {
-                    foreach (MetroTalkMessage m in cm.conversations[gc.UserJid.Bare])
+                    listOfConv.Clear();
+
+                    if (cm.conversations.ContainsKey(gc.UserJid.Bare))
                     {
-                        Console.WriteLine(m);
-                        if (m.To.Bare == userSelected.jid.Bare || m.From.Bare == userSelected.jid.Bare)
+                        foreach (MetroTalkMessage m in cm.conversations[gc.UserJid.Bare])
                         {
-                            Console.WriteLine(m.From + " : " + m.Body);
-                            listOfConv.Add(m);
+                            Console.WriteLine(m);
+                            if (m.To.Bare == userSelected.jid.Bare || m.From.Bare == userSelected.jid.Bare)
+                            {
+                                Console.WriteLine(m.From + " : " + m.Body);
+                                listOfConv.Add(m);
+                            }
                         }
                     }
-                }
-                ScrollToEnd();
-            }));
+                    ScrollToEnd();
+                }));
+            }
 
         }
 

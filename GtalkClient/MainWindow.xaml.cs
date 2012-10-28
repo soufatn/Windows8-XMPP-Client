@@ -17,6 +17,7 @@ using agsXMPP;
 using agsXMPP.protocol.iq.roster;
 using agsXMPP.protocol.client;
 using MahApps.Metro.Controls;
+using GtalkClient.Properties;
 
 namespace GtalkClient
 {
@@ -42,12 +43,26 @@ namespace GtalkClient
             c = new ChatWindows();
             gC = new GtalkCommunication(this,c);
             c.SetGC(gC);
+
+            email.Text = (string)Settings.Default["email"];
+            password.Password = (string)Settings.Default["password"];
+            Settings.Default.Save(); // Saves settings in application configuration file
         }
 
         public void Connect(object sender, RoutedEventArgs e)
         {
-            gC.UserJid = new Jid(email.Text+"@gmail.com");
-            gC.Connect(password.Password);    
+
+            if (email.Text.Contains("@"))
+            {
+                Console.WriteLine(email.Text);
+                gC.UserJid = new Jid(email.Text);
+            } else {
+                Console.WriteLine(email.Text);
+                gC.UserJid = new Jid(email.Text + "@gmail.com");
+            }
+            Console.WriteLine(email.Text);
+            bool isCheck = (bool) save.IsChecked;
+            gC.Connect(password.Password, isCheck);    
 
         }
         private void OnKeyDownHandler(object sender, KeyEventArgs e)
@@ -55,7 +70,8 @@ namespace GtalkClient
             if (e.Key == Key.Return)
             {
                 gC.UserJid = new Jid(email.Text + "@gmail.com");
-                gC.Connect(password.Password);     
+                bool isCheck = (bool)save.IsChecked;
+                gC.Connect(password.Password, isCheck);      
             }
         }
 

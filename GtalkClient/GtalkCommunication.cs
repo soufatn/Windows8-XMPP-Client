@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using agsXMPP;
 using agsXMPP.protocol.client;
 using agsXMPP.protocol.iq.vcard;
+using GtalkClient.Properties;
 
 namespace GtalkClient
 {
@@ -18,6 +19,7 @@ namespace GtalkClient
         private MainWindow mW;
         private ChatWindows cW;
         private string packetId;
+        private bool save;
 
         public GtalkCommunication(MainWindow _mw, ChatWindows _cw)
         {
@@ -34,7 +36,7 @@ namespace GtalkClient
             cW = _cw;
             UserJid = _j;
         }
-        public void Connect(string password)
+        public void Connect(string password, bool save)
         {
             if (!connected)
             {
@@ -128,6 +130,14 @@ namespace GtalkClient
 
         private void OnLogin(object sender)
         {
+           
+            if (save)
+            {
+                Settings.Default["email"] = UserJid.Bare;
+                Settings.Default["password"] = xmppCon.Password;
+                Settings.Default.Save(); // Saves settings in application configuration file
+            }
+
             mW.showChat();
         }
 

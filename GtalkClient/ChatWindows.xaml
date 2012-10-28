@@ -14,12 +14,12 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    <Grid>
+    <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="8*"/>
         </Grid.ColumnDefinitions>
-        <ListBox Grid.Column="0" SelectionChanged="OnSelect"  Name="listBox1" ItemsSource="{Binding}">
+        <ListBox Grid.Column="0" SelectionChanged="OnSelect"  Name="listBox1" ItemsSource="{Binding}" Margin="0,0,10,0">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Vertical">
@@ -34,7 +34,7 @@
                 <RowDefinition Height="30"/>
             </Grid.RowDefinitions>
             <TextBox Grid.Row="1" Name="body" Text="TextBox" KeyDown="Send" />
-            <ListBox Grid.Row="0" Name="listBoxConv" ItemsSource="{Binding}">
+            <ListBox Grid.Row="0" Name="listBoxConv" ItemsSource="{Binding}" Margin="10">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">

@@ -15,7 +15,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    <Grid>
+    <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
@@ -31,11 +31,11 @@
         </Grid.RowDefinitions>
         <Label Grid.Column="0" Grid.Row="0" Content="Gtalk Client" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="36"/>
         <Label Grid.Column="0" Grid.Row="1" Margin="10,0,0,0" Content="E-mail" HorizontalAlignment="Left" VerticalContentAlignment="Center"/>
-        <TextBox Grid.Column="0" Grid.Row="2"  x:Name="email" HorizontalContentAlignment="Stretch" />
+        <TextBox Grid.Column="0" Grid.Row="2"  x:Name="email" HorizontalContentAlignment="Stretch"/>
         <Label Grid.Column="0" Grid.Row="3" Margin="10,0,0,0" Content="Password" HorizontalAlignment="Left" VerticalContentAlignment="Center" />
-        <PasswordBox Grid.Column="0" Grid.Row="4" x:Name="password" HorizontalContentAlignment="Stretch" KeyDown="OnKeyDownHandler"/>
+        <PasswordBox Grid.Column="0" Grid.Row="4" x:Name="password" HorizontalContentAlignment="Stretch" KeyDown="OnKeyDownHandler" />
         <Button Grid.Column="0" Grid.Row="6" Click="Connect" Content="Connection" HorizontalContentAlignment="Center"/>
-        <CheckBox Content="Remember me" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="5" VerticalAlignment="Center" />
+        <CheckBox x:Name="save" Content="Remember me" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="5" VerticalAlignment="Center" />
 
     </Grid>
 </Controls:MetroWindow>
