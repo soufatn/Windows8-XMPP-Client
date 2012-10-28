@@ -90,6 +90,8 @@ namespace GtalkClient
         public void OnSelect(object sender, RoutedEventArgs e)
         {
             RefreshConversation();
+            body.IsEnabled = true;
+            body.Text = "";
             userSelected = (UserJabber)listBox1.SelectedItem;
         }
 

@@ -33,11 +33,11 @@
                 <RowDefinition Height="8*"/>
                 <RowDefinition Height="30"/>
             </Grid.RowDefinitions>
-            <TextBox Grid.Row="1" Name="body" Text="TextBox" KeyDown="Send" />
+            <TextBox Grid.Row="1" Name="body" KeyDown="Send" IsEnabled="False" Text="Click on contact to convers." />
             <ListBox Grid.Row="0" Name="listBoxConv" ItemsSource="{Binding}" Margin="10">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal" Width="*">
                             <TextBlock Text="{Binding DateTimeStr}" Margin="10,0,10,0"/>
                             <TextBlock Text="{Binding From.Bare}"  Margin="10,0,10,0"/>
                             <TextBlock Text="{Binding Body}"  Margin="10,0,10,0"/>
