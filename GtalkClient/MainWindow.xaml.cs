@@ -46,7 +46,6 @@ namespace GtalkClient
 
             email.Text = (string)Settings.Default["email"];
             password.Password = (string)Settings.Default["password"];
-            Settings.Default.Save(); // Saves settings in application configuration file
         }
 
         public void Connect(object sender, RoutedEventArgs e)
@@ -77,6 +76,7 @@ namespace GtalkClient
 
         public void showChat() {
             this.Dispatcher.Invoke(new Action(delegate() {
+                this.Hide();
                 c.Show();
             }));
         }

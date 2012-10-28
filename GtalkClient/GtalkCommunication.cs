@@ -137,7 +137,6 @@ namespace GtalkClient
                 Settings.Default["password"] = xmppCon.Password;
                 Settings.Default.Save(); // Saves settings in application configuration file
             }
-
             mW.showChat();
         }
 
